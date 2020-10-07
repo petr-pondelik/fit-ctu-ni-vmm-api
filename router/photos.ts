@@ -1,5 +1,5 @@
 import express, {Router} from "express";
-import UnsplashApiClient from "../src/Client/UnsplashApiClient";
+import UnsplashApiClient from "../src/UnsplashApi/UnsplashApiClient";
 
 let router: Router = express.Router();
 let apiClient: UnsplashApiClient = new UnsplashApiClient();

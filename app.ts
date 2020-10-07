@@ -6,7 +6,7 @@ import logger from "morgan";
 
 import indexRouter from "./router/index";
 import photosRouter from "./router/photos";
-import UnsplashApiClientConfig from "./src/Config/UnsplashApiClientConfig";
+import UnsplashApiConfig from "./src/UnsplashApi/UnsplashApiConfig";
 
 // Create a new express app instance
 export const app: express.Application = express();
