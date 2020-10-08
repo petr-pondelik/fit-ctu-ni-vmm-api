@@ -5,9 +5,9 @@ let router: Router = express.Router();
 let apiClient: UnsplashApiClient = new UnsplashApiClient();
 
 /** GET photos */
-router.get('/search', (req, res, next) => {
-    let queryTerms: string = (req.query['query'] ?? '') as string;
-    apiClient.searchPhotos(queryTerms).then((result) => {
+router.post('/search', (req, res, next) => {
+    apiClient.searchPhotos(req.body['query']).then((result) => {
+
         res.send({"res": result});
     });
 });
