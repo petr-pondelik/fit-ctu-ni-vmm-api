@@ -26,6 +26,6 @@
   },
   "scripts": {
     "run": "ts-node bin/www.ts",
-    "test": "ts-node test/Similiarity/EditDistance.ts"
+    "test": "ts-node test/Similiarity/EditDistance.ts && ts-node test/Similiarity/GreatCircleDistance.ts"
   }
 }
