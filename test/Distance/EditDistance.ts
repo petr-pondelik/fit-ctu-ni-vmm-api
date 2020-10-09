@@ -1,4 +1,4 @@
-import EditDistance from "../../src/Similiarity/EditDistance";
+import EditDistance from "../../src/Distance/EditDistance";
 
 let editDistance = new EditDistance();
 console.assert(editDistance.evaluate('abba', 'cba') === 2);
