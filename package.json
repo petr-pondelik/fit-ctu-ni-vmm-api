@@ -25,6 +25,7 @@
     "ts-node": "^9.0.0"
   },
   "scripts": {
-    "run": "ts-node bin/www.ts"
+    "run": "ts-node bin/www.ts",
+    "test": "ts-node test/Similiarity/EditDistance.ts"
   }
 }
