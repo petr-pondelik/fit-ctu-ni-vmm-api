@@ -6,7 +6,7 @@ import logger from "morgan";
 
 import indexRouter from "./router/index";
 import photosRouter from "./router/photos";
-import UnsplashApiConfig from "./src/UnsplashApi/UnsplashApiConfig";
+import EditDistance from "./src/Similiarity/EditDistance";
 
 // Create a new express app instance
 export const app: express.Application = express();
@@ -24,3 +24,6 @@ app.use('/photos', photosRouter);
 app.use((req, res, next) => {
     next(createHttpError(404));
 });
+
+let editDistance = new EditDistance();
+editDistance.evaluate('aho', 'hol');
