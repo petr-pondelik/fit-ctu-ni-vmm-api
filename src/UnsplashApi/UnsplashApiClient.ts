@@ -1,6 +1,8 @@
 import UnsplashApiConfig from "./UnsplashApiConfig";
 import fetch, {Headers} from "node-fetch";
 import UnsplashApiPool from "./UnsplashApiPool";
+import PhotoInterface from "./Interface/PhotoInterface";
+import ResponseInterface from "./Interface/ResponseInterface";
 
 export default class UnsplashApiClient {
 
@@ -17,7 +19,7 @@ export default class UnsplashApiClient {
     /**
      * @param termsQuery
      */
-    searchPhotos(termsQuery: string): Promise<any> {
+    searchPhotos(termsQuery: string): Promise<ResponseInterface> {
         let requestHeaders = new Headers();
         let apiKey = this.pool.getFreeApiKey();
         console.log(apiKey);
@@ -38,6 +40,14 @@ export default class UnsplashApiClient {
                     reject(error)
                 });
         });
+    }
+
+    /**
+     * @param photos
+     */
+    getPhotos(photos: Array<PhotoInterface>): /*Promise<ResponseInterface>*/ void {
+        // TODO: Get photos details from Unsplash API
+        console.log(photos);
     }
 
 }
