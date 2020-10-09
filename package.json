@@ -26,6 +26,6 @@
   },
   "scripts": {
     "run": "ts-node bin/www.ts",
-    "test": "ts-node test/Distance/EditDistance.ts && ts-node test/Distance/GreatCircleDistance.ts && ts-node test/Distance/DateTimeDistance.ts"
+    "test": "ts-node test/Distance/EditDistance.ts && ts-node test/Distance/GreatCircleDistance.ts && ts-node test/Distance/DateTimeDistance.ts && ts-node test/Distance/IntegerDistance.ts"
   }
 }
