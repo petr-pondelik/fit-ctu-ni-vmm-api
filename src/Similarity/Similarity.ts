@@ -11,9 +11,12 @@ export default class Similarity {
     editDistance: EditDistance;
     distanceMatrix: DistanceMatrix;
 
-    constructor() {
+    /**
+     * @param amount
+     */
+    constructor(amount: number) {
         this.editDistance = new EditDistance();
-        this.distanceMatrix = new DistanceMatrix();
+        this.distanceMatrix = new DistanceMatrix(amount);
     }
 
     /**
@@ -26,7 +29,12 @@ export default class Similarity {
             this.evaluateAuthorDistance(query, photo.user);
         });
         this.distanceMatrix.normalize();
-        return photos;
+        let globalDistances: Array<[number, number]> = this.distanceMatrix.getGlobalDistances();
+        let res: Array<PhotoInterface> = [];
+        globalDistances.forEach((item) => {
+            res.push(photos[item[0]]);
+        });
+        return res;
     }
 
     /**
@@ -35,7 +43,7 @@ export default class Similarity {
      */
     evaluateAuthorDistance(query: SimilarityQueryInterface, author: UserInterface): void {
         if (typeof query.author === 'string') {
-            this.distanceMatrix.editDistances.push(this.editDistance.evaluate(query.author, author.name));
+            this.distanceMatrix.pushEditDistance(this.editDistance.evaluate(query.author, author.name));
         }
     }
 
