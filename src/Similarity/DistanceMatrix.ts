@@ -56,7 +56,7 @@ export default class DistanceMatrix {
      * @param val
      */
     pushGreatCircleDistance(val: number): void {
-
+        console.log(val);
     }
 
     /**

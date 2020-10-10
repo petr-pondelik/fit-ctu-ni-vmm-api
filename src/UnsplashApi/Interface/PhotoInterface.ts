@@ -1,9 +1,9 @@
 import UserInterface from "./UserInterface";
-import PositionInterface from "./PositionInterface";
+import LocationInterface from "./LocationInterface";
 
 export default interface PhotoInterface {
     id: string,
     created_at: string,
     user: UserInterface,
-    position: PositionInterface
+    location: LocationInterface
 }
