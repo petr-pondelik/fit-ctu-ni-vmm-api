@@ -22,10 +22,7 @@ export default class EditDistance {
         this.firstStr = firstStr;
         this.secondStr = secondStr;
         this.initMemoization();
-        console.log(this.firstStr);
-        console.log(this.secondStr);
         this.editDistance(0, 0);
-        console.log(this.memoizationTable);
         return this.memoizationTable[0][0];
     }
 
