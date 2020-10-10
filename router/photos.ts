@@ -1,4 +1,4 @@
-import express, {Router} from "express";
+import express, {response, Router} from "express";
 import UnsplashApiClient from "../src/UnsplashApi/UnsplashApiClient";
 import ResponseInterface from "../src/UnsplashApi/Interface/ResponseInterface";
 import PhotoInterface from "../src/UnsplashApi/Interface/PhotoInterface";
@@ -14,13 +14,21 @@ router.post('/search', (req, res, next) => {
     apiClient.searchPhotos(req.body['query']).then(
         (result: ResponseInterface) => {
             /** If there is location in query, get photos details from Unsplash API */
-            console.log(req.body);
             let photos: Array<PhotoInterface> = result.results;
             if (typeof req.body['position'] === 'object') {
-                apiClient.getPhotos(result.results)
+                apiClient.getPhotos(photos).then((response) => {
+                    console.log('AFTER getPhotos');
+                    let photosReRanked: Array<PhotoInterface> = similarity.reRank(response, req.body);
+                    res.send({
+                        "res": photosReRanked
+                    });
+                });
+            } else {
+                let photosReRanked: Array<PhotoInterface> = similarity.reRank(photos, req.body);
+                res.send({
+                    "res": photosReRanked
+                });
             }
-            let photosReRanked: Array<PhotoInterface> = similarity.reRank(photos);
-            res.send({"res": photosReRanked});
         }
     );
 

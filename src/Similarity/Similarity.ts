@@ -1,4 +1,5 @@
 import PhotoInterface from "../UnsplashApi/Interface/PhotoInterface";
+import SimilarityQueryInterface from "./SimilarityQueryInterface";
 
 export default class Similarity {
     // TODO: Handle photos similarity score to search query
@@ -6,8 +7,9 @@ export default class Similarity {
 
     /**
      * @param photos
+     * @param query
      */
-    reRank(photos: Array<PhotoInterface>): Array<PhotoInterface> {
+    reRank(photos: Array<PhotoInterface>, query: SimilarityQueryInterface): Array<PhotoInterface> {
         // TODO: Re-rank by metadata
         return photos;
     }

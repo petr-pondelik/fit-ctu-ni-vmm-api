@@ -24,14 +24,12 @@ export default class UnsplashApiPool {
     }
 
     cleanExpiredLogs(): void {
-        console.log('cleanExpiredLogs');
         let res: any = {};
         for (const apiKey in this.requestsLog) {
             res[apiKey] = [];
             for (const logId in this.requestsLog[apiKey]) {
                 // console.log(this.requestsLog[apiKey][logId]);
                 let timestamp = this.requestsLog[apiKey][logId];
-                console.log(Date.now() - timestamp);
                 if ((Date.now() - timestamp) <= this.timeLimit) {
                     res[apiKey].push(timestamp);
                 }
@@ -41,7 +39,6 @@ export default class UnsplashApiPool {
             }
         }
         this.requestsLog = res;
-        console.log(this.requestsLog);
     }
 
     /**
