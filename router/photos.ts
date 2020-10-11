@@ -17,7 +17,6 @@ router.post('/search', (req, res, next) => {
             let photos: Array<PhotoInterface> = result.results;
             if (typeof req.body['position'] === 'object') {
                 apiClient.getPhotos(photos).then((response) => {
-                    console.log('AFTER getPhotos');
                     let photosReRanked: Array<PhotoInterface> = similarity.reRank(response, req.body);
                     res.send({
                         "res": photosReRanked

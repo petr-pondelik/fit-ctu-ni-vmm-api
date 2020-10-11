@@ -5,13 +5,15 @@ import DistanceMatrix from "./DistanceMatrix";
 import UserInterface from "../UnsplashApi/Interface/UserInterface";
 import LocationInterface from "../UnsplashApi/Interface/LocationInterface";
 import GreatCircleDistance from "../Distance/GreatCircleDistance";
+import DateTimeDistance from "../Distance/DateTimeDistance";
+import IntegerDistance from "../Distance/IntegerDistance";
 
 export default class Similarity {
-    // TODO: Handle photos similarity score to search query
-    // Based on normalized distances
 
     editDistance: EditDistance;
     greatCircleDistance: GreatCircleDistance;
+    dateTimeDistance: DateTimeDistance;
+    integerDistance: IntegerDistance
     distanceMatrix: DistanceMatrix;
 
     /**
@@ -20,6 +22,8 @@ export default class Similarity {
     constructor(amount: number) {
         this.editDistance = new EditDistance();
         this.greatCircleDistance = new GreatCircleDistance();
+        this.dateTimeDistance = new DateTimeDistance();
+        this.integerDistance = new IntegerDistance();
         this.distanceMatrix = new DistanceMatrix(amount);
     }
 
@@ -30,13 +34,15 @@ export default class Similarity {
     reRank(photos: Array<PhotoInterface>, query: SimilarityQueryInterface): Array<PhotoInterface> {
         // TODO: Re-rank by metadata
         console.log('reRank');
-        console.log(photos);
         photos.forEach((photo) => {
             this.evaluateAuthorDistance(query, photo.user);
             this.evaluateGPSDistance(query, photo.location);
+            this.evaluateCreatedDistance(query, photo.created_at);
+            this.evaluateDimensionsDistance(query, photo.width, photo.height);
         });
         this.distanceMatrix.normalize();
         let globalDistances: Array<[number, number]> = this.distanceMatrix.getGlobalDistances();
+        console.log(globalDistances);
         let res: Array<PhotoInterface> = [];
         globalDistances.forEach((item) => {
             res.push(photos[item[0]]);
@@ -56,19 +62,42 @@ export default class Similarity {
 
     /**
      * @param query
-     * @param position
+     * @param location
      */
-    evaluateGPSDistance(query: SimilarityQueryInterface, position: LocationInterface): void {
+    evaluateGPSDistance(query: SimilarityQueryInterface, location: LocationInterface): void {
         console.log('evaluateGPSDistance');
-        console.log(query);
-        console.log(position);
         if (typeof query.position === "object") {
-            this.distanceMatrix.pushGreatCircleDistance(
-                this.greatCircleDistance.evaluate(
+            let greatCircleDistance: number = -1;
+            if (typeof location.position.latitude === "number" && typeof location.position.longitude === "number") {
+                greatCircleDistance = this.greatCircleDistance.evaluate(
                     query.position.latitude, query.position.longitude,
-                    position.position.latitude, position.position.longitude
-                )
-            );
+                    location.position.latitude, location.position.longitude
+                );
+            }
+            this.distanceMatrix.pushGreatCircleDistance(greatCircleDistance);
+        }
+    }
+
+    /**
+     * @param query
+     * @param dateTime
+     */
+    evaluateCreatedDistance(query: SimilarityQueryInterface, dateTime: string): void {
+        if (typeof query.created === "string") {
+            this.distanceMatrix.pushDateTimeDistance(this.dateTimeDistance.evaluate(query.created, dateTime));
+        }
+    }
+
+    /**
+     * @param query
+     * @param width
+     * @param height
+     */
+    evaluateDimensionsDistance(query: SimilarityQueryInterface, width: number, height: number): void {
+        if (typeof query.dimensions === "object") {
+            this.distanceMatrix.pushIntegerDistance(
+                this.integerDistance.evaluate(query.dimensions.width * query.dimensions.height, width * height)
+            )
         }
     }
 

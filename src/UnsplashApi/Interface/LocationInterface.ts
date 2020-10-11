@@ -4,7 +4,7 @@ export default interface LocationInterface {
     city: string,
     country: string,
     position: {
-        latitude: number,
-        longitude: number
+        latitude?: number,
+        longitude?: number
     }
 }

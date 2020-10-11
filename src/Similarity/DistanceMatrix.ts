@@ -14,14 +14,14 @@ export default class DistanceMatrix {
     }
 
     normalize(): void {
+        console.log('normalize');
         this.matrix.forEach((vector, i) => {
-            console.log(vector);
             if (vector.length > 0) {
                 let maximum = vector.reduce((a: number, b: number) => {
                     return Math.max(a, b);
                 });
                 for (let i = 0; i < vector.length; i++) {
-                    vector[i] = vector[i]/maximum;
+                    vector[i] = vector[i] !== -1 ? vector[i]/maximum : 1;
                 }
                 this.matrix[i] = vector;
             }
@@ -56,21 +56,21 @@ export default class DistanceMatrix {
      * @param val
      */
     pushGreatCircleDistance(val: number): void {
-        console.log(val);
+        this.matrix[1].push(val);
     }
 
     /**
      * @param val
      */
     pushDateTimeDistance(val: number): void {
-
+        this.matrix[2].push(val);
     }
 
     /**
      * @param val
      */
     pushIntegerDistance(val: number): void {
-
+        this.matrix[3].push(val);
     }
 
 }
