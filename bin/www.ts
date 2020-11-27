@@ -14,7 +14,7 @@ let debug: Debug = require("debug")('semestral-project:server');
 /**
  * Get port from environment and store in Express.
  */
-let port = normalizePort(process.env.PORT ?? '3000');
+let port = normalizePort(process.env.PORT ?? '3333');
 app.set('port', port);
 
 /**

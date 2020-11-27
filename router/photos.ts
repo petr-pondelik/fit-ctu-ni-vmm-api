@@ -25,7 +25,10 @@ router.post('/search', (req, res, next) => {
             } else {
                 let photosReRanked: Array<PhotoInterface> = similarity.reRank(photos, req.body);
                 res.send({
-                    "res": photosReRanked
+                    "res": {
+                        "original": result,
+                        "reRanked:": photosReRanked
+                    }
                 });
             }
         }
