@@ -3,7 +3,7 @@ export default class DistanceMatrix {
     amount: number;
 
     matrix: Array<Array<number>> = [
-        [], [], [], []
+        [], [], [], [], []
     ];
 
     /**
@@ -69,8 +69,12 @@ export default class DistanceMatrix {
     /**
      * @param val
      */
-    pushIntegerDistance(val: number): void {
+    pushWidthIntDistance(val: number): void {
         this.matrix[3].push(val);
+    }
+
+    pushHeightIntDistance(val: number): void {
+        this.matrix[4].push(val);
     }
 
 }

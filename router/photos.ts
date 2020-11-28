@@ -10,6 +10,9 @@ let apiClient: UnsplashApiClient = new UnsplashApiClient();
 /** GET photos */
 router.post('/search', (req, res, next) => {
 
+    console.log(req.body);
+    console.log(req.body['query']);
+
     apiClient.searchPhotos(req.body['query']).then(
         (result: ResponseInterface) => {
             let similarity: Similarity = new Similarity(result.results.length);
@@ -19,15 +22,18 @@ router.post('/search', (req, res, next) => {
                 apiClient.getPhotos(photos).then((response) => {
                     let photosReRanked: Array<PhotoInterface> = similarity.reRank(response, req.body);
                     res.send({
-                        "res": photosReRanked
+                        "res": {
+                            "original": response,
+                            "reRanked": photosReRanked
+                        }
                     });
                 });
             } else {
                 let photosReRanked: Array<PhotoInterface> = similarity.reRank(photos, req.body);
                 res.send({
                     "res": {
-                        "original": result,
-                        "reRanked:": photosReRanked
+                        "original": result.results,
+                        "reRanked": photosReRanked
                     }
                 });
             }

@@ -38,7 +38,8 @@ export default class Similarity {
             this.evaluateAuthorDistance(query, photo.user);
             this.evaluateGPSDistance(query, photo.location);
             this.evaluateCreatedDistance(query, photo.created_at);
-            this.evaluateDimensionsDistance(query, photo.width, photo.height);
+            this.evaluateWidthDistance(query, photo.width);
+            this.evaluateHeightDistance(query, photo.height)
         });
         this.distanceMatrix.normalize();
         let globalDistances: Array<[number, number]> = this.distanceMatrix.getGlobalDistances();
@@ -93,10 +94,22 @@ export default class Similarity {
      * @param width
      * @param height
      */
-    evaluateDimensionsDistance(query: SimilarityQueryInterface, width: number, height: number): void {
-        if (typeof query.dimensions === "object") {
-            this.distanceMatrix.pushIntegerDistance(
-                this.integerDistance.evaluate(query.dimensions.width * query.dimensions.height, width * height)
+    evaluateWidthDistance(query: SimilarityQueryInterface, width: number): void {
+        if (typeof query.dimensions === "object" && typeof query.dimensions.width === "number") {
+            this.distanceMatrix.pushWidthIntDistance(
+                this.integerDistance.evaluate(query.dimensions.width, width)
+            )
+        }
+    }
+
+    /**
+     * @param query
+     * @param height
+     */
+    evaluateHeightDistance(query: SimilarityQueryInterface, height: number): void {
+        if (typeof query.dimensions === "object" && typeof query.dimensions.height === "number") {
+            this.distanceMatrix.pushHeightIntDistance(
+                this.integerDistance.evaluate(query.dimensions.height, height)
             )
         }
     }

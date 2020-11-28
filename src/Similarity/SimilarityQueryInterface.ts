@@ -6,8 +6,8 @@ export default interface SimilarityQueryInterface {
         longitude: number
     },
     dimensions?: {
-        width: number,
-        height: number
+        width?: number,
+        height?: number
     },
     created?: string
 }

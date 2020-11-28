@@ -14,3 +14,7 @@ https://www.nhc.noaa.gov/gccalc.shtml
 ### Unsplash API
 
 Returns latitude in N format and longitude in E format.
+
+### Position queries:
+
+prague river
