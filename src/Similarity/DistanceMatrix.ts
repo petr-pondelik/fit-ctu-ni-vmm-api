@@ -21,7 +21,7 @@ export default class DistanceMatrix {
                     return Math.max(a, b);
                 });
                 for (let i = 0; i < vector.length; i++) {
-                    vector[i] = vector[i] !== -1 ? vector[i]/maximum : 1;
+                    vector[i] = vector[i] !== -1 ? vector[i]/maximum : 2;
                 }
                 this.matrix[i] = vector;
             }

@@ -75,6 +75,7 @@ export default class Similarity {
                     location.position.latitude, location.position.longitude
                 );
             }
+            console.log(greatCircleDistance);
             this.distanceMatrix.pushGreatCircleDistance(greatCircleDistance);
         }
     }
