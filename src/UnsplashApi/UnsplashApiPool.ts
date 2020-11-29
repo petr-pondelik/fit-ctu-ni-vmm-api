@@ -27,6 +27,7 @@ export default class UnsplashApiPool {
         let res: any = {};
         for (const apiKey in this.requestsLog) {
             res[apiKey] = [];
+            // console.log(apiKey);
             for (const logId in this.requestsLog[apiKey]) {
                 // console.log(this.requestsLog[apiKey][logId]);
                 let timestamp = this.requestsLog[apiKey][logId];
@@ -39,6 +40,8 @@ export default class UnsplashApiPool {
             }
         }
         this.requestsLog = res;
+        console.log(this.requestsLog);
+        this.saveLog();
     }
 
     /**

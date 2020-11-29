@@ -20,6 +20,7 @@ export default class UnsplashApiClient {
     getHeaders(): Headers {
         let requestHeaders = new Headers();
         let apiKey = this.pool.getFreeApiKey();
+        console.log('Used key: ' + apiKey);
         // console.log(apiKey);
         this.pool.updateLog(apiKey, Date.now());
         requestHeaders.append('Authorization', `Client-ID ${apiKey}`);
