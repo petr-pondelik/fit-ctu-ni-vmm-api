@@ -35,11 +35,18 @@ export default class UnsplashApiPool {
                     res[apiKey].push(timestamp);
                 }
             }
-            if ((res[apiKey]).length < this.requestsPerLimit && !this.freeKeySet()) {
+        }
+
+        for (const apiKey in res) {
+            if ((res[apiKey]).length < this.requestsPerLimit) {
                 this.freeKey = apiKey;
+                res[apiKey].push(Date.now())
+                break;
             }
         }
+
         this.requestsLog = res;
+        // this.requestsLog[this.freeKey].push(new Date())
         console.log(this.requestsLog);
         this.saveLog();
     }
