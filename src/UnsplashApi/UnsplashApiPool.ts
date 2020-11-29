@@ -14,22 +14,16 @@ export default class UnsplashApiPool {
         this.config = new UnsplashApiConfig();
     }
 
-    freeKeySet(): boolean {
-        return !!this.freeKey;
-    }
-
     loadLog(): any {
         let rawData: Buffer = fs.readFileSync(Path.resolve(__dirname, '..', '..', this.config.logPath));
         this.requestsLog = JSON.parse(rawData.toString());
     }
 
-    cleanExpiredLogs(): void {
+    updateApiLog(): void {
         let res: any = {};
         for (const apiKey in this.requestsLog) {
             res[apiKey] = [];
-            // console.log(apiKey);
             for (const logId in this.requestsLog[apiKey]) {
-                // console.log(this.requestsLog[apiKey][logId]);
                 let timestamp = this.requestsLog[apiKey][logId];
                 if ((Date.now() - timestamp) <= this.timeLimit) {
                     res[apiKey].push(timestamp);
@@ -46,19 +40,6 @@ export default class UnsplashApiPool {
         }
 
         this.requestsLog = res;
-        // this.requestsLog[this.freeKey].push(new Date())
-        console.log(this.requestsLog);
-        this.saveLog();
-    }
-
-    /**
-     * @param apiKey
-     * @param timestamp
-     */
-    updateLog(apiKey: string, timestamp: number): void {
-        this.loadLog();
-        this.requestsLog[apiKey].push(timestamp);
-        this.saveLog();
     }
 
     saveLog(): void {
@@ -66,9 +47,7 @@ export default class UnsplashApiPool {
     }
 
     getFreeApiKey(): string {
-        // TODO: Retrieve first free connection key from pool
-        this.loadLog();
-        this.cleanExpiredLogs();
+        this.updateApiLog();
         // TODO: Handle state where there are no free keys
         return this.freeKey ?? '';
     }

@@ -13,16 +13,15 @@ export default class UnsplashApiClient {
     getPhotoPath: string = '/photos'
 
     constructor() {
+        console.log('UnsplashApiClient');
         this.config = new UnsplashApiConfig();
         this.pool = new UnsplashApiPool();
     }
 
     getHeaders(): Headers {
         let requestHeaders = new Headers();
-        // this.pool.updateLog(apiKey, Date.now());
         let apiKey = this.pool.getFreeApiKey();
         console.log('Used key: ' + apiKey);
-        // console.log(apiKey);
         requestHeaders.append('Authorization', `Client-ID ${apiKey}`);
         return requestHeaders;
     }
@@ -38,6 +37,7 @@ export default class UnsplashApiClient {
      * @param amount
      */
     searchPhotos(termsQuery: string, amount?: number): Promise<ResponseInterface> {
+        this.pool.loadLog();
         let requestInit = this.initRequest();
         let photosPerPage: number = (typeof amount === "number") ? amount : this.config.photosPerPage;
         let url: string = `${this.config.apiUrl}${this.searchPhotosPath}?page=${this.config.photosSearchPages}&per_page=${photosPerPage}&query=${termsQuery}`;
@@ -47,9 +47,11 @@ export default class UnsplashApiClient {
                     return response.json();
                 })
                 .then((json) => {
+                    this.pool.saveLog();
                     resolve(json);
                 })
                 .catch((error) => {
+                    this.pool.saveLog();
                     reject(error);
                 });
         });
@@ -79,13 +81,13 @@ export default class UnsplashApiClient {
      * @param photos
      */
     async getPhotos(photos: Array<PhotoInterface>): Promise<Array<PhotoInterface>> {
-        // TODO: Get photos details from Unsplash API
-        console.log('getPhotos');
+        this.pool.loadLog();
         let res: Array<PhotoInterface> = [];
         for (const id in photos) {
             let photoRes: PhotoInterface = await this.getPhoto(photos[id].id);
             res.push(photoRes);
         }
+        this.pool.saveLog();
         return Promise.resolve(res);
     }
 
