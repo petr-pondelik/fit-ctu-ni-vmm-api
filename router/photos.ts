@@ -10,10 +10,7 @@ let apiClient: UnsplashApiClient = new UnsplashApiClient();
 /** GET photos */
 router.post('/search', (req, res, next) => {
 
-    console.log(req.body);
-    console.log(req.body['query']);
-
-    apiClient.searchPhotos(req.body['query']).then(
+    apiClient.searchPhotos(req.body['query'], req.body['amount']).then(
         (result: ResponseInterface) => {
             let similarity: Similarity = new Similarity(result.results.length);
             /** If there is location in query, get photos details from Unsplash API */

@@ -34,10 +34,12 @@ export default class UnsplashApiClient {
 
     /**
      * @param termsQuery
+     * @param amount
      */
-    searchPhotos(termsQuery: string): Promise<ResponseInterface> {
+    searchPhotos(termsQuery: string, amount?: number): Promise<ResponseInterface> {
         let requestInit = this.initRequest();
-        let url: string = `${this.config.apiUrl}${this.searchPhotosPath}?page=${this.config.photosSearchPages}&per_page=${this.config.photosPerPage}&query=${termsQuery}`;
+        let photosPerPage: number = (typeof amount === "number") ? amount : this.config.photosPerPage;
+        let url: string = `${this.config.apiUrl}${this.searchPhotosPath}?page=${this.config.photosSearchPages}&per_page=${photosPerPage}&query=${termsQuery}`;
         return new Promise((resolve, reject) => {
             fetch(url, requestInit)
                 .then((response) => {

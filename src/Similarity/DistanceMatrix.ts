@@ -14,7 +14,6 @@ export default class DistanceMatrix {
     }
 
     normalize(): void {
-        console.log('normalize');
         this.matrix.forEach((vector, i) => {
             if (vector.length > 0) {
                 let maximum = vector.reduce((a: number, b: number) => {
@@ -26,7 +25,6 @@ export default class DistanceMatrix {
                 this.matrix[i] = vector;
             }
         });
-        console.log(this.matrix);
     }
 
     getGlobalDistances(): Array<[number, number]> {
@@ -40,9 +38,40 @@ export default class DistanceMatrix {
             }
             res.push([j, photoGlobalDistance]);
         }
-        return res.sort((a: [number, number], b: [number, number]) => {
-            return a[1] - b[1];
+        return this.sortRes(res);
+    }
+
+    /**
+     * @param res
+     */
+    sortRes(res: Array<[number, number]>): Array<[number, number]> {
+        if (res.length < 1) {
+            return res;
+        }
+
+        let sort: boolean = false;
+        let firstW: number = res[0][1];
+
+        for (let i = 0; i < res.length; i++) {
+            if (res[i][1] !== firstW) {
+                sort = true;
+                break;
+            }
+        }
+
+        res.forEach((item) => {
+            if (item[1] !== firstW) {
+                sort = true;
+            }
         });
+
+        if (sort === true) {
+            return res.sort((a: [number, number], b: [number, number]) => {
+                return a[1] - b[1];
+            });
+        }
+
+        return res;
     }
 
     /**
