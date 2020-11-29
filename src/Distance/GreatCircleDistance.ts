@@ -20,21 +20,21 @@ export default class GreatCircleDistance {
         return this.earthRadius * this.getCentralAngle();
     }
 
-    // getCentralAngle(): number {
-    //     let longitudeDiff: number = Math.abs(this.longitude1 - this.longitude2);
-    //     console.log(longitudeDiff);
-    //
-    //     let factor: number = Math.sqrt(
-    //         Math.pow(Math.cos(this.latitude2) * Math.sin(longitudeDiff), 2) +
-    //         Math.pow(Math.cos(this.latitude1) * Math.sin(this.latitude2) - Math.sin(this.latitude1) * Math.cos(this.latitude2) * Math.cos(longitudeDiff), 2)
-    //     );
-    //
-    //     let denominator: number = Math.sin(this.latitude1) * Math.sin(this.latitude2) + Math.cos(this.latitude1) * Math.cos(this.latitude2) * Math.cos(longitudeDiff);
-    //
-    //     console.log(Math.atan(factor/denominator));
-    //
-    //     return Math.atan(factor/denominator);
-    // }
+    getCentralAngle(): number {
+        let longitudeDiff: number = Math.abs(this.longitude1 - this.longitude2);
+        console.log(longitudeDiff);
+
+        let factor: number = Math.sqrt(
+            Math.pow(Math.cos(this.latitude2) * Math.sin(longitudeDiff), 2) +
+            Math.pow(Math.cos(this.latitude1) * Math.sin(this.latitude2) - Math.sin(this.latitude1) * Math.cos(this.latitude2) * Math.cos(longitudeDiff), 2)
+        );
+
+        let denominator: number = Math.sin(this.latitude1) * Math.sin(this.latitude2) + Math.cos(this.latitude1) * Math.cos(this.latitude2) * Math.cos(longitudeDiff);
+
+        console.log(Math.atan(factor/denominator));
+
+        return Math.atan(factor/denominator);
+    }
 
     // getCentralAngle(): number {
     //     let longitudeDiff: number = Math.abs(this.longitude1 - this.longitude2);
@@ -47,11 +47,11 @@ export default class GreatCircleDistance {
     //     return 2 * Math.asin(sqrtPart);
     // }
 
-    getCentralAngle(): number {
-        let longitudeDiff: number = Math.abs(this.longitude1 - this.longitude2);
-        let acosArg: number = Math.sin(this.latitude1) * Math.sin(this.latitude2) + Math.cos(this.latitude1) * Math.cos(this.latitude2) * Math.cos(longitudeDiff);
-        return Math.acos(acosArg);
-    }
+    // getCentralAngle(): number {
+    //     let longitudeDiff: number = Math.abs(this.longitude1 - this.longitude2);
+    //     let acosArg: number = Math.sin(this.latitude1) * Math.sin(this.latitude2) + Math.cos(this.latitude1) * Math.cos(this.latitude2) * Math.cos(longitudeDiff);
+    //     return Math.acos(acosArg);
+    // }
 
     /**
      * @param degree
