@@ -17,6 +17,8 @@ Returns latitude in N format and longitude in E format.
 
 ### Position queries:
 
+prague
+
 prague river
 
 czech national park
