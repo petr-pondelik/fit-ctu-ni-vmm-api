@@ -1,24 +1,54 @@
-# NI-VMM Semestral Project
+# NI-VMM: Unsplash - metadata-based reranking API
 
-## Podobnost řetězců - editační vzdálenost
+## Prerequisites
 
-https://courses.fit.cvut.cz/BI-AG1/@B181/media/lectures/bi-ag1-p10-handout.pdf
-https://phiresky.github.io/levenshtein-demo/  
-https://www.geeksforgeeks.org/edit-distance-dp-using-memoization/
+* Node.js >= v10.19.0
+* NPM nebo Yarn (pro vývoj využíván Yarn v1.22.5)
 
-## Great Circle Distance
+## Run project
 
-https://en.wikipedia.org/wiki/Great-circle_distance  
-https://www.nhc.noaa.gov/gccalc.shtml
+All the commands have to be run within the project root.
 
-### Unsplash API
+1: Install project dependencies (node_module/ directory).
 
-Returns latitude in N format and longitude in E format.
+   
+    yarn
 
-### Position queries:
+2: Run the application using package.json script:
 
-prague
+ 
+    yarn run run
+    
+2: Or run the application using ts-node package:
 
-prague river
+    ./node_modules/ts-node/dist/bin.js bin/www.ts    
+    
+3: API should be listening on the [http://localhost:3333](http://localhost:3333) or [http://127.0.0.1:3333](http://127.0.0.1:3333).
 
-czech national park
+## Create your log file for ApiPool
+
+Rename `data/unsplashApiLog.dummy.json` to `data/unsplashApiLog.json`.
+
+## Sending requests
+
+Requests can be send using Postman `or ni-vmm-front` web client.
+
+## Routes
+
+There is one route available:
+
+    POST /photos/search
+    Body:
+    {
+        "query": string,
+        "author": string,
+        "position": {
+            "latitude": number,
+            "longitude": number
+        },
+        "dimensions": {
+            "width": number,
+            "height": number
+        },
+        "created": datetime
+    }
