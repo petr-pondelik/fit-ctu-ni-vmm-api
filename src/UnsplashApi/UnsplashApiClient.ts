@@ -13,7 +13,6 @@ export default class UnsplashApiClient {
     getPhotoPath: string = '/photos'
 
     constructor() {
-        console.log('UnsplashApiClient');
         this.config = new UnsplashApiConfig();
         this.pool = new UnsplashApiPool();
     }
@@ -21,7 +20,6 @@ export default class UnsplashApiClient {
     getHeaders(): Headers {
         let requestHeaders = new Headers();
         let apiKey = this.pool.getFreeApiKey();
-        console.log('Used key: ' + apiKey);
         requestHeaders.append('Authorization', `Client-ID ${apiKey}`);
         return requestHeaders;
     }

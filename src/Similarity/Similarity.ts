@@ -32,8 +32,6 @@ export default class Similarity {
      * @param query
      */
     reRank(photos: Array<PhotoInterface>, query: SimilarityQueryInterface): Array<PhotoInterface> {
-        // TODO: Re-rank by metadata
-        console.log('reRank');
         photos.forEach((photo) => {
             this.evaluateAuthorDistance(query, photo.user);
             this.evaluateGPSDistance(query, photo.location);
@@ -43,7 +41,6 @@ export default class Similarity {
         });
         this.distanceMatrix.normalize();
         let globalDistances: Array<[number, number]> = this.distanceMatrix.getGlobalDistances();
-        console.log(globalDistances);
         let res: Array<PhotoInterface> = [];
         globalDistances.forEach((item) => {
             res.push(photos[item[0]]);
@@ -66,7 +63,6 @@ export default class Similarity {
      * @param location
      */
     evaluateGPSDistance(query: SimilarityQueryInterface, location: LocationInterface): void {
-        console.log('evaluateGPSDistance');
         if (typeof query.position === "object") {
             let greatCircleDistance: number = -1;
             if (typeof location.position.latitude === "number" && typeof location.position.longitude === "number") {
@@ -75,7 +71,6 @@ export default class Similarity {
                     location.position.latitude, location.position.longitude
                 );
             }
-            console.log(greatCircleDistance);
             this.distanceMatrix.pushGreatCircleDistance(greatCircleDistance);
         }
     }

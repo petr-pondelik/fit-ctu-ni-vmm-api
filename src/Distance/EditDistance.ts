@@ -21,8 +21,6 @@ export default class EditDistance {
     evaluate(firstStr: string, secondStr: string): number {
         this.firstStr = firstStr;
         this.secondStr = secondStr;
-        console.log(this.firstStr);
-        console.log(this.secondStr);
         this.initMemoization();
         this.editDistance(0, 0);
         return this.memoizationTable[0][0];
