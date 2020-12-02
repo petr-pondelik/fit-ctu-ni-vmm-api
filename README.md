@@ -10,12 +10,10 @@
 All the commands have to be run within the project root.
 
 1: Install project dependencies (node_module/ directory).
-
    
     yarn
 
 2: Run the application using package.json script:
-
  
     yarn run run
     
